@@ -1,5 +1,5 @@
 import express from "express";
-import heavyRoutes from "./routes/heavy.routes.js";
+import heavyRoutes from "./routes/route.js";
 
 const app = express();
 
