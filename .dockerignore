@@ -1,3 +1,6 @@
-**/*.env
-**/node_modules
-.git/
+node_modules
+.git
+.gitignore
+.env
+docs
+docker-compose.yml
