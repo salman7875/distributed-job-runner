@@ -22,61 +22,51 @@ const PAYLOAD = {
   },
 };
 
-/**
- * 1. CPU-INTENSIVE TASK
- * Simulates heavy mathematical computation (blocking)
- */
 router.get("/cpu", (req, res) => {
-  let result = 0;
+  // let result = 0;
 
   // for (let i = 0; i < 1e9; i++) {
   //   result += Math.sqrt(i);
   // }
 
+  client.lpush("task_queue:cpu", JSON.stringify(PAYLOAD.cpu));
+
   res.json({
     message: "CPU intensive task completed",
-    result,
   });
 });
 
-/**
- * 2. MEMORY-INTENSIVE TASK
- * Allocates and processes a very large array
- */
 router.get("/memory", (req, res) => {
-  const largeArray = [];
+  // const largeArray = [];
 
-  for (let i = 0; i < 50_000_000; i++) {
-    largeArray.push(i * Math.random());
-  }
+  // for (let i = 0; i < 50_000_000; i++) {
+  //   largeArray.push(i * Math.random());
+  // }
 
-  const sum = largeArray.reduce((a, b) => a + b, 0);
+  // const sum = largeArray.reduce((a, b) => a + b, 0);
+
+  client.lpush("task_queue:memory", JSON.stringify(PAYLOAD.memory));
 
   res.json({
     message: "Memory intensive task completed",
-    arrayLength: largeArray.length,
-    sum,
   });
 });
 
-/**
- * 3. ASYNC HEAVY TASK (SIMULATED I/O)
- * Simulates slow external services or long DB calls
- */
 router.get("/async", async (req, res) => {
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  const tasks = [];
+  // const tasks = [];
 
-  for (let i = 0; i < 20; i++) {
-    tasks.push(delay(500));
-  }
+  // for (let i = 0; i < 20; i++) {
+  //   tasks.push(delay(500));
+  // }
 
-  await Promise.all(tasks);
+  // await Promise.all(tasks);
+
+  client.lpush("task_queue:read_heavy", JSON.stringify(PAYLOAD.read_heavy));
 
   res.json({
     message: "Async heavy task completed",
-    tasksExecuted: tasks.length,
   });
 });
 
