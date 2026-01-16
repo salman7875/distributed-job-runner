@@ -1,4 +1,5 @@
 export async function task3() {
+  console.log("Starting Async heavy intensive task...");
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const tasks = [];
@@ -8,4 +9,5 @@ export async function task3() {
   }
 
   await Promise.all(tasks);
+  console.log("Ending Async heavy intensive task...");
 }

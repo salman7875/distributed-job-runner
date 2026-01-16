@@ -6,8 +6,11 @@ services:
     container_name: redis-stack-container
     restart: unless-stopped
     ports:
-      - "6379:6378"
+      - "6379:6379"
       - "8001:8001"
+    environment:
+      REDIS_HOST: redis-stack
+      REDIS_PORT: 6378
 
   api:
     container_name: nodejs-api-container
@@ -19,7 +22,8 @@ services:
       - redis-stack
     volumes:
       - .:/app
-      - /app/node_modules
+    ports:
+      - "3000:3000"
     restart: unless-stopped
 
   worker:

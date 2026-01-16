@@ -1,17 +1,26 @@
-import { task1 } from "./utils/task1.js";
-import { task2 } from "./utils/task2.js";
-import { task3 } from "./utils/task3.js";
+import { redisClient, connectRedis } from "../../../shared/config/redis.js";
+import { jobKeys, WORKER } from "./utils/tasks/index.js";
 
-const WORKER = {
-  cpu: {
-    task: task1,
-  },
-  memory: {
-    task: task2,
-  },
-  read_heavy: {
-    task: task3,
-  },
-};
+connectRedis()
+  .then(() => {
+    console.log("🚀 Worker connected to Redis, waiting for tasks...");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
-while (true) {}
+async function worker() {
+  while (true) {
+    try {
+      const result = await redisClient.BLPOP(jobKeys, 0);
+      if (result) {
+        await WORKER[result.key.split(":")[1]].task();
+      }
+    } catch (error) {
+      console.error("Worker error:", err);
+      await new Promise((res) => setTimeout(res, 1000));
+    }
+  }
+}
+
+worker();
