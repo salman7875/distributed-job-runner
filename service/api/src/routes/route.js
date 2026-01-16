@@ -2,6 +2,24 @@ import { Router } from "express";
 
 const router = Router();
 
+const PAYLOAD = {
+  cpu: {
+    id: "cpu",
+    description: "CPU Intensive Task",
+    timestamp: Date.now(),
+  },
+  memory: {
+    id: "memory",
+    description: "Memory Intensive Task",
+    timestamp: Date.now(),
+  },
+  read_heavy: {
+    id: "read_heavy",
+    description: "Read Heavy Task",
+    timestamp: Date.now(),
+  },
+};
+
 /**
  * 1. CPU-INTENSIVE TASK
  * Simulates heavy mathematical computation (blocking)
