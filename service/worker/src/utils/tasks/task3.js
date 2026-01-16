@@ -5,7 +5,7 @@ export async function task3() {
   const tasks = [];
 
   for (let i = 0; i < 20; i++) {
-    tasks.push(delay(500));
+    tasks.push(delay(2000));
   }
 
   await Promise.all(tasks);
