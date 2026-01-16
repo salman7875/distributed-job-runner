@@ -1,4 +1,4 @@
-export async function name() {
+export async function task3() {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const tasks = [];

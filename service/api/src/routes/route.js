@@ -1,6 +1,8 @@
 import { Router } from "express";
+import { createClient } from "redis";
 
 const router = Router();
+const client = createClient();
 
 const PAYLOAD = {
   cpu: {
@@ -27,9 +29,9 @@ const PAYLOAD = {
 router.get("/cpu", (req, res) => {
   let result = 0;
 
-  for (let i = 0; i < 1e9; i++) {
-    result += Math.sqrt(i);
-  }
+  // for (let i = 0; i < 1e9; i++) {
+  //   result += Math.sqrt(i);
+  // }
 
   res.json({
     message: "CPU intensive task completed",

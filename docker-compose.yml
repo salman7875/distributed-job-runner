@@ -1,4 +1,4 @@
-version: "1"
+version: "1.1"
 
 services:
   redis-stack:
@@ -8,8 +8,6 @@ services:
     ports:
       - "6379:6378"
       - "8001:8001"
-    depends_on:
-      - redis
 
   api:
     container_name: nodejs-api-container
@@ -18,7 +16,7 @@ services:
       dockerfile: docker/api/Dockerfile
     command: npm run dev:server
     depends_on:
-      - redis
+      - redis-stack
     volumes:
       - .:/app
       - /app/node_modules
@@ -31,7 +29,7 @@ services:
       dockerfile: docker/api/Dockerfile
     command: npm run dev:worker
     depends_on:
-      - redis
+      - redis-stack
     volumes:
       - .:/app
     restart: unless-stopped
