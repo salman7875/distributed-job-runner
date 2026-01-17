@@ -30,14 +30,14 @@ connectRedis()
   });
 
 router.get("/cpu", (req, res) => {
-  redisClient.lPush("task_queue:cpu", JSON.stringify(PAYLOAD.cpu));
+  redisClient.lPush("pending_queue:cpu", JSON.stringify(PAYLOAD.cpu));
   res.json({
     message: "CPU intensive task completed",
   });
 });
 
 router.get("/memory", (req, res) => {
-  redisClient.lPush("task_queue:memory", JSON.stringify(PAYLOAD.memory));
+  redisClient.lPush("pending_queue:memory", JSON.stringify(PAYLOAD.memory));
 
   res.json({
     message: "Memory intensive task completed",
@@ -46,7 +46,7 @@ router.get("/memory", (req, res) => {
 
 router.get("/async", async (req, res) => {
   redisClient.lPush(
-    "task_queue:read_heavy",
+    "pending_queue:read_heavy",
     JSON.stringify(PAYLOAD.read_heavy)
   );
 

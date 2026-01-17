@@ -4,9 +4,9 @@ import { task3 } from "./task3.js";
 import { WORKER } from "./task-aggregator.js";
 
 const jobKeys = [
-  "task_queue:cpu",
-  "task_queue:memory",
-  "task_queue:read_heavy",
+  "pending_queue:cpu",
+  "pending_queue:memory",
+  "pending_queue:read_heavy",
 ];
 
 export { task1, task2, task3, jobKeys, WORKER };
