@@ -13,12 +13,18 @@ async function worker() {
   while (true) {
     try {
       const result = await redisClient.BLPOP(jobKeys, 0);
+      await redisClient.LPUSH(`process_queue:${result.key}`, result.element);
       if (result) {
         await WORKER[result.key.split(":")[1]].task();
+        await redisClient.BLPOP(`process_queue:${result.key}`);
       }
     } catch (error) {
       console.error("Worker error:", err);
-      await new Promise((res) => setTimeout(res, 1000));
+      const result = await redisClient.BLPOP(jobKeys, 0);
+      const taskRes = await redisClient.BLPOP(`process_queue:${result.key}`);
+      if (taskRes) {
+        await redisClient.LPUSH(`process_queue:${result.key}`, taskRes.element);
+      }
     }
   }
 }
